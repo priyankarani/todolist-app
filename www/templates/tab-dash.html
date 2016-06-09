@@ -1,0 +1,31 @@
+<ion-view view-title="My ToDo List">
+  <ion-content class="padding">
+    <form ng-submit="addTask()">
+      <label class="item item-input">
+      <input type="text" placeholder="Your task name" ng-model="pageObj.newTask">
+      </label>
+    </form>
+    <div class="list">
+      <div class="item item-icon-right" ng-repeat="task in tasks | orderBy:'id'" ng-click="toggleDone(task)">
+        {{ task.name }}
+        <i class="icon ion-checkmark-circled" ng-show="task.is_done"></i>
+      </div>
+    </div>
+    <ul dnd-list="list">
+    <!-- The dnd-draggable directive makes an element draggable and will
+         transfer the object that was assigned to it. If an element was
+         dragged away, you have to remove it from the original list
+         yourself using the dnd-moved attribute -->
+    <li ng-repeat="task in tasks"
+        dnd-draggable="task"
+        dnd-moved="list.splice($index, 1)"
+        dnd-effect-allowed="move"
+        dnd-selected="models.selected = task"
+        ng-class="{'selected': models.selected === task}"
+        >
+        {{task.name}}
+    </li>
+    </ul>
+
+  </ion-content>
+</ion-view>
